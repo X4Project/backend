@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const home = require('../routes/home');
+const disease = require('../routes/disease');
 const error = require('../middlewares/error');
 
 module.exports = app => {
@@ -27,6 +28,7 @@ module.exports = app => {
   });
 
   app.use('/', home);
+  app.use('/disease', disease);
 
-//   app.use(error);
+  //   app.use(error);
 };

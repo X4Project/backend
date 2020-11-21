@@ -1,5 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-   PORT: process.env.PORT
-}
+  SUPPRESS_NO_CONFIG_WARNING: process.env.SUPPRESS_NO_CONFIG_WARNING,
+  PORT: process.env.PORT,
+  DATABASE_CONNECTION: process.env.DATABASE_CONNECTION
+};
