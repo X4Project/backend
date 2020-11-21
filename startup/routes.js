@@ -1,5 +1,3 @@
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable no-unused-vars */
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -7,6 +5,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const home = require('../routes/home');
 const disease = require('../routes/disease');
+const category = require('../routes/category');
 const error = require('../middlewares/error');
 
 module.exports = app => {
@@ -29,6 +28,6 @@ module.exports = app => {
 
   app.use('/', home);
   app.use('/disease', disease);
-
-  //   app.use(error);
+  app.use('/category', category);
+  app.use(error);
 };

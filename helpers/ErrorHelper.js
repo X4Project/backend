@@ -9,9 +9,9 @@ const response = (
 ) => {
   return {
     httpStatusCode,
+    messageErrorCode,
     responseClient,
-    responseServer,
-    messageErrorCode
+    responseServer
   };
 };
 

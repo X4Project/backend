@@ -1,6 +1,5 @@
 const { logger } = require('../middlewares/logging');
 const mongoose = require('mongoose');
-const queryString = require('querystring');
 const { diseaseSchema } = require('../models/disease');
 const { categorySchema } = require('../models/category');
 const ErrorHelper = require('../helpers/ErrorHelper');
@@ -10,20 +9,23 @@ const {
   DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE
 } = require('../constants/paginationConstants');
-const { DEFAULT_SORT_BY_DIRECTION } = require('../constants/sortingConstants');
+const {
+  DEFAULT_SORT_BY_DIRECTION,
+  DEFAULT_SORT_BY_COLUMN
+} = require('../constants/sortingConstants');
 
-const addCategoryToDisease = (diseaseId, category) => {
-  return Disease.findByIdAndUpdate(
+const addCategoryToDisease = async (diseaseId, categoryId) => {
+  return await Disease.findByIdAndUpdate(
     diseaseId,
-    { $push: { categories: category._id } },
+    { $push: { categories: categoryId } },
     { new: true, useFindAndModify: false }
   );
 };
 
-const addDiseaseToCategory = (categoryId, disease) => {
-  return Category.findByIdAndUpdate(
+const addDiseaseToCategory = async (categoryId, diseaseId) => {
+  return await Category.findByIdAndUpdate(
     categoryId,
-    { $push: { diseases: disease._id } },
+    { $push: { diseases: diseaseId } },
     { new: true, useFindAndModify: false }
   );
 };
@@ -35,9 +37,19 @@ const getDiseases = async (req, res) => {
       categoryId,
       pageIndex = DEFAULT_PAGE_INDEX,
       pageSize = DEFAULT_PAGE_SIZE,
-      orderByColumn,
+      orderByColumn = DEFAULT_SORT_BY_COLUMN,
       orderByDirection = DEFAULT_SORT_BY_DIRECTION
     } = req.body;
+
+    const count = await Disease.find({
+      name: {
+        $regex: name
+      },
+      'categories._id': {
+        $in: [categoryId]
+      }
+    }).count();
+
     const diseases = await Disease.find({
       name: {
         $regex: name
@@ -48,15 +60,14 @@ const getDiseases = async (req, res) => {
     })
       .populate('categories')
       .select('id _id name categories overview')
+      .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
       .skip((pageIndex - 1) * pageSize)
       .limit(pageSize);
-    const count = await Disease.count();
+
     res.send({ pageIndex, pageSize, count, diseases });
   } catch (error) {
     logger.error(error.message, error);
-    res
-      .status(400)
-      .json({ errorCode: 1, errorMessage: 'Something went wrong.' });
+    return ErrorHelper.InternalServerError(res);
   }
 };
 
@@ -76,5 +87,7 @@ const getDiseaseById = async (req, res) => {
 
 module.exports = {
   getDiseases,
-  getDiseaseById
+  getDiseaseById,
+  addCategoryToDisease,
+  addDiseaseToCategory
 };
