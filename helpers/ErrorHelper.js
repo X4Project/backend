@@ -1,11 +1,17 @@
 const httpStatus = require('http-status');
 const createError = require('http-errors');
 
-const response = (statusCode, responseClient, responseServer) => {
+const response = (
+  httpStatusCode,
+  responseClient,
+  responseServer,
+  messageErrorCode = 1
+) => {
   return {
-    statusCode,
+    httpStatusCode,
     responseClient,
-    responseServer
+    responseServer,
+    messageErrorCode
   };
 };
 
@@ -54,14 +60,14 @@ const ResponseMessage = {
         )
       );
   },
-  NotFound: (res, serverError) => {
+  NotFound: res => {
     res
       .status(httpStatus.NOT_FOUND)
       .json(
         response(
           httpStatus.NOT_FOUND,
           createError(httpStatus.NOT_FOUND),
-          serverError
+          createError(httpStatus.NOT_FOUND)
         )
       );
   },
@@ -76,14 +82,14 @@ const ResponseMessage = {
         )
       );
   },
-  InternalServerError: (res, serverError) => {
+  InternalServerError: res => {
     res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
       .json(
         response(
           httpStatus.INTERNAL_SERVER_ERROR,
           createError(httpStatus.INTERNAL_SERVER_ERROR),
-          serverError
+          createError(httpStatus.INTERNAL_SERVER_ERROR)
         )
       );
   },

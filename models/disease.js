@@ -32,7 +32,12 @@ const diseaseSchema = new Schema({
   preventionArray: String,
   bookmark: String,
   note: String,
-  categoryIds: String
+  categories: [
+    {
+      type: ObjectId,
+      ref: 'categories'
+    }
+  ]
 });
 
 module.exports.diseaseSchema = diseaseSchema;
