@@ -3,11 +3,14 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const swaggerUi = require('swagger-ui-express');
 const home = require('../routes/home');
 const disease = require('../routes/disease');
 const category = require('../routes/category');
 const error = require('../middlewares/error');
-
+const swaggerJSDoc = require('swagger-jsdoc');
+const { options } = require('./swagger.config');
+const swaggerSpec = swaggerJSDoc(options);
 module.exports = app => {
   app.use(cors({ origin: '*', credentials: true }));
   app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,5 +32,6 @@ module.exports = app => {
   app.use('/', home);
   app.use('/disease', disease);
   app.use('/category', category);
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use(error);
 };

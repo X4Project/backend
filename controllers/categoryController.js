@@ -10,7 +10,7 @@ const Category = mongoose.model('categories', categorySchema, 'categories');
 
 const getAllCategories = async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().select('-diseases');
     res.send(categories);
   } catch (error) {
     logger.error(error.message, error);

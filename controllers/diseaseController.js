@@ -73,7 +73,10 @@ const getDiseases = async (req, res) => {
 
 const getDiseaseById = async (req, res) => {
   try {
-    let disease = await Disease.findById(req.params.id).populate('categories');
+    let disease = await Disease.findById(req.params.id).populate(
+      'categories',
+      '-diseases'
+    );
     if (!disease) {
       return ErrorHelper.NotFound(res);
     } else {
