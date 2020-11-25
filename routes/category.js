@@ -5,12 +5,27 @@ const {
   addCategory,
   getDiseasesByCategoryId
 } = require('../controllers/categoryController');
+const validateObjectId = require('../middlewares/validateObjectId');
 
 /**
  * @swagger
  * tags:
  *   name: Category
  *   summary: API to manage all categories.
+ * definitions:
+ *   AddCategoryRequest:
+ *     type: object
+ *     properties:
+ *       name:
+ *         type: string
+ *       image:
+ *         type: string
+ *       tag:
+ *         type: string
+ *       description:
+ *         type: string
+ *       parentCategoryId:
+ *         type: number
  */
 
 /**
@@ -32,13 +47,15 @@ router.get('/', getAllCategories);
  *     parameters:
  *       - in: path
  *         name: categoryId
+ *       - in: query
+ *         name: name
  *     tags: [Category]
  *     summary: Get diseases by category
  *     responses:
  *       200:
  *         description: Success
  */
-router.get('/diseases/:id', getDiseasesByCategoryId);
+router.get('/diseases/:id', validateObjectId, getDiseasesByCategoryId);
 
 /**
  * @swagger
@@ -46,6 +63,17 @@ router.get('/diseases/:id', getDiseasesByCategoryId);
  *   post:
  *     tags: [Category]
  *     summary: Create a new category
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: category
+ *         description: The category to create
+ *         schema:
+ *           $ref: '#/definitions/AddCategoryRequest'
+ *     responses:
+ *       200:
+ *         description: Success
  */
 router.post('/', addCategory);
 

@@ -4,6 +4,7 @@ const {
   getDiseases,
   getDiseaseById
 } = require('../controllers/diseaseController');
+const validateObjectId = require('../middlewares/validateObjectId');
 
 /**
  * @swagger
@@ -60,6 +61,6 @@ router.get('/', getDiseases);
  *       200:
  *         description: Success
  */
-router.get('/:id', getDiseaseById);
+router.get('/:id', validateObjectId, getDiseaseById);
 
 module.exports = router;

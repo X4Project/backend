@@ -1,11 +1,12 @@
-const { string } = require('joi');
 const mongoose = require('mongoose');
+const normalize = require('normalize-mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const diseaseSchema = new Schema({
   id: Number,
   name: String,
+  image: String,
   overview: String,
   definition: String,
   symptoms: String,
@@ -39,5 +40,7 @@ const diseaseSchema = new Schema({
     }
   ]
 });
+
+diseaseSchema.plugin(normalize);
 
 module.exports.diseaseSchema = diseaseSchema;

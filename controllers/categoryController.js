@@ -1,5 +1,5 @@
-const { logger } = require('../middlewares/logging');
 const mongoose = require('mongoose');
+const { logger } = require('../middlewares/logging');
 const { categorySchema } = require('../models/category');
 const ErrorHelper = require('../helpers/ErrorHelper');
 const {
@@ -19,11 +19,19 @@ const getAllCategories = async (req, res) => {
 };
 
 const addCategory = async (req, res) => {
-  const { name, description, image, parentCategoryId, diseases } = req.body;
+  const {
+    name,
+    description,
+    image,
+    parentCategoryId,
+    tag,
+    diseases
+  } = req.body;
   const category = new Category({
     name,
     description,
     image,
+    tag,
     parentCategoryId
   });
   try {
@@ -41,10 +49,14 @@ const addCategory = async (req, res) => {
 
 const getDiseasesByCategoryId = async (req, res) => {
   try {
-    const diseases = await Category.findById(req.params.id).populate(
-      'diseases'
-    );
-    res.send(diseases);
+    const { name } = req.query;
+    const category = await Category.findById(req.params.id)
+      .populate('diseases')
+      .select('name image overview');
+    const diseases = category.diseases;
+    //TODO: GET POPULATED FIELD OF A DOCUMENT
+    const filteredDiseases = diseases.filter(x => x.name.includes(name));
+    res.send({ ...category, diseases: filteredDiseases });
   } catch (error) {
     logger.error(error.message, error);
     return ErrorHelper.InternalServerError(res);

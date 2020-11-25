@@ -58,13 +58,13 @@ const getDiseases = async (req, res) => {
         $in: [categoryId]
       }
     })
-      .populate('categories')
-      .select('id _id name categories overview')
+      .populate('categories', '_id name tag')
+      .select('name categories overview')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
       .skip((pageIndex - 1) * pageSize)
       .limit(pageSize);
 
-    res.send({ pageIndex, pageSize, count, diseases });
+    res.send({ pageIndex, pageSize, count, data: diseases });
   } catch (error) {
     logger.error(error.message, error);
     return ErrorHelper.InternalServerError(res);
@@ -73,10 +73,9 @@ const getDiseases = async (req, res) => {
 
 const getDiseaseById = async (req, res) => {
   try {
-    let disease = await Disease.findById(req.params.id).populate(
-      'categories',
-      '-diseases'
-    );
+    let disease = await Disease.findById(req.params.id)
+      .populate('categories', 'id name tag')
+      .select('-id');
     if (!disease) {
       return ErrorHelper.NotFound(res);
     } else {
