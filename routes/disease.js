@@ -35,10 +35,30 @@ const validateObjectId = require('../middlewares/validateObjectId');
  *   get:
  *     tags: [Disease]
  *     parameters:
- *       - in: body
- *         name: GetDiseasesRequest
+ *       - in: query
+ *         name: keyword
  *         schema:
- *           $ref: '#/definitions/GetDiseasesRequest'
+ *           type: string
+ *       - in: query
+ *         name: categoryId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: number
+ *       - in: query
+ *         name: pageNumber
+ *         schema:
+ *           type: number
+ *       - in: query
+ *         name: orderByColumn
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: orderByDirection
+ *         schema:
+ *           type: string
  *     summary: Get diseases
  *     responses:
  *       200:

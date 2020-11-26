@@ -49,14 +49,12 @@ const addCategory = async (req, res) => {
 
 const getDiseasesByCategoryId = async (req, res) => {
   try {
-    const { name } = req.query;
-    const category = await Category.findById(req.params.id)
-      .populate('diseases')
-      .select('name image overview');
-    const diseases = category.diseases;
-    //TODO: GET POPULATED FIELD OF A DOCUMENT
-    const filteredDiseases = diseases.filter(x => x.name.includes(name));
-    res.send({ ...category, diseases: filteredDiseases });
+    const category = await Category.find({
+      _id: req.params.id
+    })
+      .populate('diseases', '-id')
+      .select('diseases');
+    res.send(category);
   } catch (error) {
     logger.error(error.message, error);
     return ErrorHelper.InternalServerError(res);

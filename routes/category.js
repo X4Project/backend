@@ -47,8 +47,7 @@ router.get('/', getAllCategories);
  *     parameters:
  *       - in: path
  *         name: categoryId
- *       - in: query
- *         name: name
+ *         required: true
  *     tags: [Category]
  *     summary: Get diseases by category
  *     responses:

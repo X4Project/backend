@@ -33,36 +33,56 @@ const addDiseaseToCategory = async (categoryId, diseaseId) => {
 const getDiseases = async (req, res) => {
   try {
     const {
-      name = '',
+      keyword = '',
       categoryId,
       pageIndex = DEFAULT_PAGE_INDEX,
       pageSize = DEFAULT_PAGE_SIZE,
       orderByColumn = DEFAULT_SORT_BY_COLUMN,
       orderByDirection = DEFAULT_SORT_BY_DIRECTION
-    } = req.body;
+    } = req.query;
 
     const count = await Disease.find({
-      name: {
-        $regex: name
-      },
-      'categories._id': {
+      $or: [
+        {
+          name: {
+            $regex: keyword
+          }
+        },
+        {
+          overview: {
+            $regex: keyword
+          }
+        }
+      ],
+      categories: {
         $in: [categoryId]
       }
     }).count();
 
     const diseases = await Disease.find({
-      name: {
-        $regex: name
-      },
-      'categories._id': {
+      $or: [
+        {
+          name: {
+            $regex: keyword,
+            $options: 'i'
+          }
+        },
+        {
+          overview: {
+            $regex: keyword,
+            $options: 'i'
+          }
+        }
+      ],
+      categories: {
         $in: [categoryId]
       }
     })
-      .populate('categories', '_id name tag')
+      .populate('categories', 'id name tag')
       .select('name categories overview')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
       .skip((pageIndex - 1) * pageSize)
-      .limit(pageSize);
+      .limit(parseInt(pageSize));
 
     res.send({ pageIndex, pageSize, count, data: diseases });
   } catch (error) {
