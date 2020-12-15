@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const {
   getDiseases,
-  getDiseaseById
+  getDiseaseById,
+  addCategoryToDisease
 } = require('../controllers/diseaseController');
 const validateObjectId = require('../middlewares/validateObjectId');
 
@@ -27,6 +28,15 @@ const validateObjectId = require('../middlewares/validateObjectId');
  *         type: string
  *       orderByDirection:
  *         type: string
+ *   AddCategoryToDiseaseRequest:
+ *     type: object
+ *     properties:
+ *       diseaseId:
+ *         type: string
+ *         required: true
+ *       categoryId:
+ *         type: string
+ *         required: true
  */
 
 /**
@@ -73,14 +83,44 @@ router.get('/', getDiseases);
  *   get:
  *     tags: [Disease]
  *     parameters:
- *       - in: path
+ *       - in: body
+ *         name: diseaseId
  *         required: true
- *         name: id
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: categoryId
+ *         required: true
+ *         schema:
+ *           type: string
  *     summary: Get all diseases
  *     responses:
  *       200:
  *         description: Success
  */
 router.get('/:id', validateObjectId, getDiseaseById);
+
+/**
+ * @swagger
+ * /disease/add-category:
+ *   post:
+ *     tags: [Disease]
+ *     summary: Add category for a disease
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: addCategoryToDiseaseRequest
+ *         schema:
+ *           $ref: '#/definitions/AddCategoryToDiseaseRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+router.post('/add-category', addCategoryToDisease);
 
 module.exports = router;
