@@ -78,8 +78,8 @@ const getDiseases = async (req, res) => {
         $in: [categoryId]
       }
     })
-      .populate('categories', 'id name tag')
-      .select('name categories overview')
+      // .populate('categories', 'id name tag')
+      .select('name image overview')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
       .skip((pageIndex - 1) * pageSize)
       .limit(parseInt(pageSize));
