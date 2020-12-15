@@ -1,3 +1,4 @@
 module.exports = {
-  GENERAL_ERROR: 1
+  SUCCESS: 1,
+  GENERAL_ERROR: 2
 };
