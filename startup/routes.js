@@ -13,6 +13,7 @@ const disease = require('../routes/disease');
 const category = require('../routes/category');
 const setting = require('../routes/setting');
 const symptom = require('../routes/symptom');
+const user = require('../routes/user');
 
 module.exports = app => {
   app.use(cors({ origin: '*', credentials: true }));
@@ -33,6 +34,7 @@ module.exports = app => {
   });
 
   app.use('/', home);
+  app.use('/auth', user);
   app.use('/disease', disease);
   app.use('/category', category);
   app.use('/setting', setting);
