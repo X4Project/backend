@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const ErrorHelper = require('../helpers/ErrorHelper');
+const { INVALID_OBJECTID } = require('../constants/errorCodeConstants');
 
 module.exports = (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    logger.error(error.message, error);
-    return ErrorHelper.BadRequest(res, 'Invalid Object Id');
-  } else {
-    next();
+    return res
+      .status(400)
+      .send({ statusCode: 400, responseCode: INVALID_OBJECTID });
   }
+  next();
 };

@@ -85,20 +85,19 @@ router.get('/', getDiseases);
  *   get:
  *     tags: [Disease]
  *     parameters:
- *       - in: body
- *         name: diseaseId
+ *       - in: path
+ *         name: id
  *         required: true
  *         schema:
  *           type: string
- *       - in: body
- *         name: categoryId
- *         required: true
- *         schema:
- *           type: string
- *     summary: Get all diseases
+ *     summary: Get disease by id
  *     responses:
  *       200:
  *         description: Success
+ *       400:
+ *         description: Bad Request
+ *       404:
+ *         description: Not Found
  */
 router.get('/:id', validateObjectId, getDiseaseById);
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getSymptoms } = require('../controllers/symptomController');
+const { getSymptoms, addSymptom } = require('../controllers/symptomController');
 
 /**
  * @swagger
@@ -32,5 +32,27 @@ const { getSymptoms } = require('../controllers/symptomController');
  *         description: Internal Server Error
  */
 router.get('/', getSymptoms);
+
+/**
+ * @swagger
+ * /symptom:
+ *   post:
+ *     tags: [Symptom]
+ *     summary: Add symptoms for a disease
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: symptom
+ *         description: The symptom to create
+ *         schema:
+ *           $ref: '#/definitions/AddSymptomRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *       500:
+ *         description: Internal Server Error
+ */
+router.post('/', addSymptom);
 
 module.exports = router;

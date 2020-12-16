@@ -36,7 +36,11 @@ const addCategory = async (req, res) => {
   });
   try {
     const result = await category.save();
-    await addDiseaseToCategory(result._id);
+    await Disease.findByIdAndUpdate(
+      diseaseId,
+      { $push: { categories: categoryId } },
+      { new: true, useFindAndModify: false }
+    );
     res.send(result);
   } catch (ex) {
     let errorMessages = '';
