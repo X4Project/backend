@@ -12,6 +12,7 @@ const home = require('../routes/home');
 const disease = require('../routes/disease');
 const category = require('../routes/category');
 const setting = require('../routes/setting');
+const symptom = require('../routes/symptom');
 
 module.exports = app => {
   app.use(cors({ origin: '*', credentials: true }));
@@ -35,6 +36,7 @@ module.exports = app => {
   app.use('/disease', disease);
   app.use('/category', category);
   app.use('/setting', setting);
+  app.use('/symptom', symptom);
   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use(error);
 };
