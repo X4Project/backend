@@ -15,19 +15,23 @@ const {
 } = require('../constants/sortingConstants');
 const { SUCCESS } = require('../constants/errorCodeConstants');
 
-const addCategoryToDisease = async (req, res) => {
+const addCategoriesToDisease = async (req, res) => {
   try {
-    const { categoryId, diseaseId } = req.body;
-    await Category.findByIdAndUpdate(
-      categoryId,
-      { $push: { diseases: diseaseId } },
-      { new: true, useFindAndModify: false }
-    );
-    await Disease.findByIdAndUpdate(
-      diseaseId,
-      { $push: { categories: categoryId } },
-      { new: true, useFindAndModify: false }
-    );
+    const { categoryIds, diseaseId } = req.body;
+    categoryIds &&
+      categoryIds.length > 0 &&
+      categoryIds.forEach(async categoryId => {
+        await Category.findByIdAndUpdate(
+          categoryId,
+          { $push: { diseases: diseaseId } },
+          { new: true, useFindAndModify: false }
+        );
+        await Disease.findByIdAndUpdate(
+          diseaseId,
+          { $push: { categories: categoryId } },
+          { new: true, useFindAndModify: false }
+        );
+      });
     res.send({ statusCode: 201, responseCode: SUCCESS });
   } catch (error) {
     let errorMessages = '';
@@ -119,5 +123,5 @@ const getDiseaseById = async (req, res) => {
 module.exports = {
   getDiseases,
   getDiseaseById,
-  addCategoryToDisease
+  addCategoriesToDisease
 };

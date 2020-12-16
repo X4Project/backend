@@ -3,7 +3,7 @@ const router = express.Router();
 const {
   getDiseases,
   getDiseaseById,
-  addCategoryToDisease
+  addCategoriesToDisease
 } = require('../controllers/diseaseController');
 const validateObjectId = require('../middlewares/validateObjectId');
 
@@ -34,8 +34,10 @@ const validateObjectId = require('../middlewares/validateObjectId');
  *       diseaseId:
  *         type: string
  *         required: true
- *       categoryId:
- *         type: string
+ *       categoryIds:
+ *         type: array
+ *         items:
+ *           type: string
  *         required: true
  */
 
@@ -102,7 +104,7 @@ router.get('/:id', validateObjectId, getDiseaseById);
 
 /**
  * @swagger
- * /disease/add-category:
+ * /disease/add-categories:
  *   post:
  *     tags: [Disease]
  *     summary: Add category for a disease
@@ -121,6 +123,6 @@ router.get('/:id', validateObjectId, getDiseaseById);
  *       500:
  *         description: Internal Server Error
  */
-router.post('/add-category', addCategoryToDisease);
+router.post('/add-categories', addCategoriesToDisease);
 
 module.exports = router;
