@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { splitSymptoms } = require('../controllers/systemController');
+const auth = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -31,6 +32,6 @@ const { splitSymptoms } = require('../controllers/systemController');
  *         description: Internal Server Error
  *
  */
-router.get('/split-symptoms', splitSymptoms);
+router.get('/split-symptoms', auth, splitSymptoms);
 
 module.exports = router;
