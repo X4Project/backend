@@ -4,6 +4,7 @@ const {
   getSetting,
   updateSetting
 } = require('../controllers/settingController');
+const auth = require('../middlewares/auth');
 
 /**
  * @swagger

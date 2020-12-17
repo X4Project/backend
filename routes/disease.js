@@ -6,6 +6,7 @@ const {
   addCategoriesToDisease
 } = require('../controllers/diseaseController');
 const validateObjectId = require('../middlewares/validateObjectId');
+const auth = require('../middlewares/auth');
 
 /**
  * @swagger

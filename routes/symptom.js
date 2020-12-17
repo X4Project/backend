@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { getSymptoms, addSymptom } = require('../controllers/symptomController');
+const auth = require('../middlewares/auth');
 
 /**
  * @swagger
