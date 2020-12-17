@@ -53,6 +53,6 @@ router.get('/', getSymptoms);
  *       500:
  *         description: Internal Server Error
  */
-router.post('/', addSymptom);
+router.post('/', auth, addSymptom);
 
 module.exports = router;

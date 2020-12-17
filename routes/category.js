@@ -74,6 +74,6 @@ router.get('/diseases/:id', validateObjectId, getDiseasesByCategoryId);
  *       200:
  *         description: Success
  */
-router.post('/', addCategory);
+router.post('/', auth, addCategory);
 
 module.exports = router;

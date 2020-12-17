@@ -122,6 +122,6 @@ router.get('/:id', validateObjectId, getDiseaseById);
  *       500:
  *         description: Internal Server Error
  */
-router.post('/add-categories', addCategoriesToDisease);
+router.post('/add-categories', auth, addCategoriesToDisease);
 
 module.exports = router;

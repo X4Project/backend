@@ -48,6 +48,6 @@ router.get('/', getSetting);
  *       201:
  *         description: Success
  */
-router.put('/', updateSetting);
+router.put('/', auth, updateSetting);
 
 module.exports = router;

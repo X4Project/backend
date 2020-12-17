@@ -72,6 +72,6 @@ router.post('/login', login);
  *       500:
  *         description: Internal Server Error
  */
-router.post('/register', register);
+router.post('/register', auth, register);
 
 module.exports = router;
