@@ -61,7 +61,7 @@ const auth = require('../middlewares/auth');
  *         schema:
  *           type: number
  *       - in: query
- *         name: pageNumber
+ *         name: pageIndex
  *         schema:
  *           type: number
  *       - in: query

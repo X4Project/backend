@@ -97,7 +97,12 @@ const getDiseases = async (req, res) => {
       .skip((pageIndex - 1) * pageSize)
       .limit(parseInt(pageSize));
 
-    res.send({ pageIndex, pageSize, count, data: diseases });
+    res.send({
+      pageIndex,
+      pageSize: typeof pageSize === 'string' ? parseInt(pageSize) : pageSize,
+      count,
+      data: diseases
+    });
   } catch (error) {
     logger.error(error.message, error);
     return ErrorHelper.InternalServerError(res);
