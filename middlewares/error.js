@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-vars */
 const { logger } = require('./logging');
-const ErrorHelper = require('../helpers/ErrorHelper');
+const { InternalServerError } = require('../helpers/ErrorHelper');
 
 module.exports = (err, req, res, next) => {
   logger.error(err);
   console.log(err);
-  return ErrorHelper.InternalServerError(res);
+  return InternalServerError(res, err);
 };

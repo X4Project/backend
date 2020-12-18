@@ -1,77 +1,45 @@
 const httpStatus = require('http-status');
 const createError = require('http-errors');
 
-const response = (
-  httpStatusCode,
-  responseClient,
-  responseServer,
-  messageErrorCode = 1
-) => {
+const response = (httpStatusCode, errorMessage, errorCode, data) => {
   return {
     httpStatusCode,
-    messageErrorCode,
-    responseClient,
-    responseServer
+    errorCode,
+    errorMessage,
+    data
   };
 };
 
 const ResponseMessage = {
-  BadRequest: (res, serverError) => {
+  SuccessResponse: (res, data, statusCode = 200) => {
+    res.status(statusCode).json(response(statusCode, null, null, data));
+  },
+  BadRequest: (res, serverError = '', errorCode = 1) => {
     res
       .status(httpStatus.BAD_REQUEST)
-      .json(
-        response(
-          httpStatus.BAD_REQUEST,
-          createError(httpStatus.BAD_REQUEST),
-          serverError
-        )
-      );
+      .json(response(httpStatus.BAD_REQUEST, errorCode, serverError));
   },
-  NoContent: (res, serverError) => {
+  NoContent: (res, serverError = '', errorCode = 1) => {
     res
       .status(httpStatus.NO_CONTENT)
-      .json(
-        response(
-          httpStatus.NO_CONTENT,
-          createError(httpStatus.NO_CONTENT),
-          serverError
-        )
-      );
+      .json(response(httpStatus.NO_CONTENT, errorCode, serverError));
   },
-  Unauthorized: (res, serverError) => {
+  Unauthorized: (res, serverError = '', errorCode = 1) => {
     res
       .status(httpStatus.UNAUTHORIZED)
-      .json(
-        response(
-          httpStatus.UNAUTHORIZED,
-          createError(httpStatus.UNAUTHORIZED),
-          serverError
-        )
-      );
+      .json(response(httpStatus.UNAUTHORIZED, errorCode, serverError));
   },
-  Forbidden: (res, serverError) => {
+  Forbidden: (res, serverError = '', errorCode = 1) => {
     res
       .status(httpStatus.FORBIDDEN)
-      .json(
-        response(
-          httpStatus.FORBIDDEN,
-          createError(httpStatus.FORBIDDEN),
-          serverError
-        )
-      );
+      .json(response(httpStatus.FORBIDDEN, errorCode, serverError));
   },
-  NotFound: res => {
+  NotFound: (res, serverError = '', errorCode) => {
     res
       .status(httpStatus.NOT_FOUND)
-      .json(
-        response(
-          httpStatus.NOT_FOUND,
-          createError(httpStatus.NOT_FOUND),
-          createError(httpStatus.NOT_FOUND)
-        )
-      );
+      .json(response(httpStatus.NOT_FOUND, errorCode, serverError));
   },
-  MethodNotAllowed: (res, serverError) => {
+  MethodNotAllowed: (res, serverError = '') => {
     res
       .status(httpStatus.METHOD_NOT_ALLOWED)
       .json(
@@ -82,27 +50,15 @@ const ResponseMessage = {
         )
       );
   },
-  InternalServerError: res => {
+  InternalServerError: (res, serverError = '', errorCode = 1) => {
     res
       .status(httpStatus.INTERNAL_SERVER_ERROR)
-      .json(
-        response(
-          httpStatus.INTERNAL_SERVER_ERROR,
-          createError(httpStatus.INTERNAL_SERVER_ERROR),
-          createError(httpStatus.INTERNAL_SERVER_ERROR)
-        )
-      );
+      .json(response(httpStatus.INTERNAL_SERVER_ERROR, errorCode, serverError));
   },
-  Conflict: (res, serverError) => {
+  Conflict: (res, serverError = '', errorCode = 1) => {
     res
       .status(httpStatus.CONFLICT)
-      .json(
-        response(
-          httpStatus.CONFLICT,
-          createError(httpStatus.CONFLICT),
-          serverError
-        )
-      );
+      .json(response(httpStatus.CONFLICT, errorCode, serverError));
   }
 };
 

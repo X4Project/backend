@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { logger } = require('../middlewares/logging');
 const { userSchema } = require('../models/user');
-const { BadRequest, InternalServerError } = require('../helpers/ErrorHelper');
+const {
+  BadRequest,
+  InternalServerError,
+  SuccessResponse
+} = require('../helpers/ErrorHelper');
 
 const User = mongoose.model('users', userSchema, 'users');
 
@@ -16,10 +20,10 @@ const login = async (req, res) => {
     );
     if (!isValidPassword) return BadRequest(res, 'Invalid email or password');
     const token = user.generateAuthToken();
-    res.send(token);
+    return SuccessResponse(res, token);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return InternalServerError(res, error);
   }
 };
 
@@ -32,10 +36,10 @@ const register = async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
     const token = await user.generateAuthToken();
-    res.send(token);
+    return SuccessResponse(res, token);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return InternalServerError(res, error);
   }
 };
 
