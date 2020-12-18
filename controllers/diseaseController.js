@@ -48,11 +48,13 @@ const getDiseases = async (req, res) => {
     const {
       keyword = '',
       categoryId,
-      pageIndex = DEFAULT_PAGE_INDEX,
-      pageSize = DEFAULT_PAGE_SIZE,
+      pageIndex,
+      pageSize,
       orderByColumn = DEFAULT_SORT_BY_COLUMN,
       orderByDirection = DEFAULT_SORT_BY_DIRECTION
     } = req.query;
+
+    const isGetAll = !(pageIndex && pageSize);
 
     const count = await Disease.find({
       $or: [
@@ -94,12 +96,12 @@ const getDiseases = async (req, res) => {
       // .populate('categories', 'id name tag')
       .select('name image overview')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
-      .skip((pageIndex - 1) * pageSize)
-      .limit(parseInt(pageSize));
+      .skip(isGetAll ? 0 : (pageIndex - 1) * pageSize)
+      .limit(isGetAll ? 0 : parseInt(pageSize));
 
     res.send({
-      pageIndex,
-      pageSize: typeof pageSize === 'string' ? parseInt(pageSize) : pageSize,
+      pageIndex: isGetAll ? 1 : pageIndex,
+      pageSize: isGetAll ? count : parseInt(pageSize),
       count,
       data: diseases
     });

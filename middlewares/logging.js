@@ -3,7 +3,11 @@ const { combine, timestamp, prettyPrint, json } = format;
 
 const logger = createLogger({
   level: 'info',
-  format: combine(timestamp(), json(), prettyPrint()),
+  format: combine(
+    timestamp(),
+    json(),
+    prettyPrint({ colorize: true, depth: 3 })
+  ),
   transports: [
     new transports.File({ filename: 'error.log', level: 'error' }),
     new transports.File({ filename: 'combined.log' })

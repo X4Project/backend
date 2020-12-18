@@ -4,5 +4,6 @@ const ErrorHelper = require('../helpers/ErrorHelper');
 
 module.exports = (err, req, res, next) => {
   logger.error(err);
+  console.log(err);
   return ErrorHelper.InternalServerError(res);
 };

@@ -19,34 +19,16 @@ const getAllCategories = async (req, res) => {
 };
 
 const addCategory = async (req, res) => {
-  const {
-    name,
-    description,
-    image,
-    parentCategoryId,
-    tag,
-    diseases
-  } = req.body;
-  const category = new Category({
-    name,
-    description,
-    image,
-    tag,
-    parentCategoryId
-  });
+  const category = new Category({ ...req.body });
   try {
     const result = await category.save();
-    await Disease.findByIdAndUpdate(
-      diseaseId,
-      { $push: { categories: categoryId } },
-      { new: true, useFindAndModify: false }
-    );
     res.send(result);
   } catch (ex) {
     let errorMessages = '';
     for (field in ex.errors) {
       errorMessages += ex.errors[field].message + '\n';
     }
+    logger.error(errorMessages);
     res.status(400).send(errorMessages);
   }
 };
