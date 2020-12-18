@@ -17,7 +17,7 @@ const getSetting = async (req, res) => {
     });
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return InternalServerError(res, error);
   }
 };
 
@@ -30,7 +30,7 @@ const updateSetting = async (req, res) => {
     return SuccessResponse(res, { statusCode: 200, responseCode: SUCCESS });
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return InternalServerError(res, error);
   }
 };
 

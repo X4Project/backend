@@ -2,11 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { logger } = require('../middlewares/logging');
 const { userSchema } = require('../models/user');
-const {
-  BadRequest,
-  InternalServerError,
-  SuccessResponse
-} = require('../helpers/ErrorHelper');
+const { BadRequest, SuccessResponse } = require('../helpers/ErrorHelper');
 
 const User = mongoose.model('users', userSchema, 'users');
 
@@ -23,7 +19,7 @@ const login = async (req, res) => {
     return SuccessResponse(res, token);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res, error);
+    return BadRequest(res, error);
   }
 };
 
@@ -39,7 +35,7 @@ const register = async (req, res) => {
     return SuccessResponse(res, token);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res, error);
+    return BadRequest(res, error);
   }
 };
 

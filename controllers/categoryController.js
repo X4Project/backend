@@ -43,7 +43,7 @@ const getDiseasesByCategoryId = async (req, res) => {
     return SuccessResponse(res, category);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return InternalServerError(res, error);
   }
 };
 

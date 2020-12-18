@@ -7,8 +7,7 @@ const Category = mongoose.model('categories', categorySchema, 'categories');
 const {
   SuccessResponse,
   BadRequest,
-  NotFound,
-  InternalServerError
+  NotFound
 } = require('../helpers/ErrorHelper');
 const {
   DEFAULT_SORT_BY_DIRECTION,
@@ -39,7 +38,7 @@ const addCategoriesToDisease = async (req, res) => {
       errorMessages += ex.errors[field].message + '\n';
     }
     logger.error(errorMessages, error);
-    return InternalServerError(res);
+    return BadRequest(res, error);
   }
 };
 
@@ -107,7 +106,7 @@ const getDiseases = async (req, res) => {
     });
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return BadRequest(res, error);
   }
 };
 
@@ -123,7 +122,7 @@ const getDiseaseById = async (req, res) => {
     }
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res);
+    return BadRequest(res, error);
   }
 };
 

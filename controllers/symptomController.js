@@ -4,8 +4,8 @@ const { symptomSchema } = require('../models/symptom');
 const { diseaseSchema } = require('../models/disease');
 const {
   SuccessResponse,
-  InternalServerError,
-  NotFound
+  NotFound,
+  BadRequest
 } = require('../helpers/ErrorHelper');
 const Symptom = mongoose.model('symptoms', symptomSchema, 'symptoms');
 const Disease = mongoose.model('diseases', diseaseSchema, 'diseases');
@@ -17,20 +17,20 @@ const getSymptoms = async (req, res) => {
     return SuccessResponse(res, symptoms);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res, error);
+    return BadRequest(res, error);
   }
 };
 
 const addSymptom = async (req, res) => {
   try {
     const disease = await Disease.findById(req.body.diseaseId);
-    if (!disease) return NotFound(res);
+    if (!disease) return NotFound(res, 'Not Found');
     const symptom = new Symptom(req.body);
     const result = symptom.save();
     return SuccessResponse(res, result, 201);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res, error);
+    return BadRequest(res, error);
   }
 };
 
