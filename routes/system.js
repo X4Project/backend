@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { splitSymptoms } = require('../controllers/systemController');
+const { splitSymptoms, runLogger } = require('../controllers/systemController');
 const auth = require('../middlewares/auth');
 
 /**
@@ -16,7 +16,7 @@ const auth = require('../middlewares/auth');
  *   get:
  *     tags: [System]
  *     parameters:
- *       - in: query
+ *       - in: body
  *         name: secretKey
  *         schema:
  *           type: string
@@ -32,6 +32,20 @@ const auth = require('../middlewares/auth');
  *         description: Internal Server Error
  *
  */
-router.get('/split-symptoms', auth, splitSymptoms);
+router.post('/split-symptoms', auth, splitSymptoms);
+
+/**
+ * @swagger
+ * /system/run-logger:
+ *   get:
+ *     tags: [System]
+ *     summary: Get recent log file content
+ *     responses:
+ *       200:
+ *         description: Success
+ *       500:
+ *         description: Internal Server Error
+ */
+router.get('/run-logger', runLogger);
 
 module.exports = router;
