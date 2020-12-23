@@ -8,7 +8,7 @@ module.exports = {
     swaggerDefinition: {
       info: {
         title: 'Diseases - REST API',
-        version: '0.1',
+        version: '1.0',
         description: 'REST API for managing diseases, categories'
       }
     },

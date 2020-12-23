@@ -33,22 +33,7 @@ const addCategory = async (req, res) => {
   }
 };
 
-const getDiseasesByCategoryId = async (req, res) => {
-  try {
-    const category = await Category.find({
-      _id: req.params.id
-    })
-      .populate('diseases', '-id')
-      .select('diseases');
-    return SuccessResponse(res, category);
-  } catch (error) {
-    logger.error(error.message, error);
-    return InternalServerError(res, error);
-  }
-};
-
 module.exports = {
   getAllCategories,
-  addCategory,
-  getDiseasesByCategoryId
+  addCategory
 };

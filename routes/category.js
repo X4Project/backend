@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
   getAllCategories,
-  addCategory,
-  getDiseasesByCategoryId
+  addCategory
 } = require('../controllers/categoryController');
 const validateObjectId = require('../middlewares/validateObjectId');
 const auth = require('../middlewares/auth');
@@ -40,22 +39,6 @@ const auth = require('../middlewares/auth');
  *         description: Success
  */
 router.get('/', getAllCategories);
-
-/**
- * @swagger
- * /category/diseases/{categoryId}:
- *   get:
- *     parameters:
- *       - in: path
- *         name: categoryId
- *         required: true
- *     tags: [Category]
- *     summary: Get diseases by category
- *     responses:
- *       200:
- *         description: Success
- */
-router.get('/diseases/:id', validateObjectId, getDiseasesByCategoryId);
 
 /**
  * @swagger
