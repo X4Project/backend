@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const {
   getAllCategories,
-  addCategory
+  addCategory,
+  updateCategory
 } = require('../controllers/categoryController');
 const validateObjectId = require('../middlewares/validateObjectId');
 const auth = require('../middlewares/auth');
@@ -59,5 +60,34 @@ router.get('/', getAllCategories);
  *         description: Success
  */
 router.post('/', auth, addCategory);
+
+/**
+ * @swagger
+ * /category/{id}:
+ *   patch:
+ *     tags: [Category]
+ *     summary: Update a category
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - in: body
+ *         name: category
+ *         description: The category to update
+ *         schema:
+ *           $ref: '#/definitions/AddCategoryRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+router.patch('/:id', auth, updateCategory);
 
 module.exports = router;

@@ -27,7 +27,7 @@ const updateSetting = async (req, res) => {
     const filter = { _id: latestSetting[0]._id };
     const update = { isShowAds: req.body.isShowAds, updatedDate: new Date() };
     await Setting.findOneAndUpdate(filter, update);
-    return SuccessResponse(res, { statusCode: 200, responseCode: SUCCESS });
+    return SuccessResponse(res, null, 204);
   } catch (error) {
     logger.error(error.message, error);
     return InternalServerError(res, error);

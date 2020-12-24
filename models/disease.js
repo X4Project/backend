@@ -54,7 +54,10 @@ const diseaseSchema = new Schema(
       }
     ]
   },
-  { toJSON: { virtuals: true, getters: true }, toObject: { virtuals: true } }
+  {
+    toJSON: { virtuals: true, getters: true },
+    toObject: { virtuals: true, getters: true }
+  }
 );
 
 diseaseSchema.virtual('keyword').get(function () {
