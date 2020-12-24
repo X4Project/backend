@@ -36,7 +36,7 @@ const addSymptom = async (req, res) => {
 const getSymptomsByDiseaseId = async (req, res) => {
   try {
     const symptom = await Symptom.findOne({
-      diseaseId: req.params.diseaseId
+      diseaseId: req.params.id
     });
     if (!symptom) {
       return NotFound(res, 'Not Found.');

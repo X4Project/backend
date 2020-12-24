@@ -5,6 +5,7 @@ const {
   getDiseaseById,
   addCategoriesToDisease
 } = require('../controllers/diseaseController');
+const { getSymptomsByDiseaseId } = require('../controllers/symptomController');
 const validateObjectId = require('../middlewares/validateObjectId');
 const auth = require('../middlewares/auth');
 
@@ -101,6 +102,28 @@ router.get('/', getDiseases);
  *         description: Not Found
  */
 router.get('/:id', validateObjectId, getDiseaseById);
+
+/**
+ * @swagger
+ * /disease/{id}/symptoms:
+ *   get:
+ *     tags: [Disease]
+ *     summary: Get symptom list of a disease
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+router.get('/:id/symptoms', validateObjectId, getSymptomsByDiseaseId);
 
 /**
  * @swagger

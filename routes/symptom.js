@@ -41,28 +41,6 @@ router.get('/', getSymptoms);
 
 /**
  * @swagger
- * /symptom/{diseaseId}:
- *   get:
- *     tags: [Symptom]
- *     summary: Get symptom list of a disease
- *     parameters:
- *       - in: path
- *         name: diseaseId
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Success
- *       400:
- *         description: Bad Request
- *       500:
- *         description: Internal Server Error
- */
-router.get('/:diseaseId', validateObjectId, getSymptomsByDiseaseId);
-
-/**
- * @swagger
  * /symptom:
  *   post:
  *     tags: [Symptom]
