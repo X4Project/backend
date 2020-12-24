@@ -3,7 +3,8 @@ const { INVALID_OBJECTID } = require('../constants/errorCodeConstants');
 const { BadRequest } = require('../helpers/ErrorHelper');
 
 module.exports = (req, res, next) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+  const id = req.params.id || req.params.diseaseId;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
     return BadRequest(res, 'Invalid ObjectId', INVALID_OBJECTID);
   }
   next();

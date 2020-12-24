@@ -131,5 +131,6 @@ const getDiseaseById = async (req, res) => {
 module.exports = {
   getDiseases,
   getDiseaseById,
-  addCategoriesToDisease
+  addCategoriesToDisease,
+  Disease
 };

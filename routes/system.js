@@ -8,18 +8,24 @@ const auth = require('../middlewares/auth');
  * tags:
  *   name: System
  *   summary: API to execute some grand tasks
+ * definitions:
+ *   SecretKeyRequest:
+ *     type: object
+ *     properties:
+ *       secretKey:
+ *         type: string
  */
 
 /**
  * @swagger
  * /system/split-symptoms:
- *   get:
+ *   post:
  *     tags: [System]
  *     parameters:
  *       - in: body
- *         name: secretKey
+ *         name: SecretKeyRequest
  *         schema:
- *           type: string
+ *           $ref: '#/definitions/SecretKeyRequest'
  *     summary: Split symptoms string to array of all diseases in system
  *     responses:
  *       200:
@@ -30,7 +36,6 @@ const auth = require('../middlewares/auth');
  *         description: Bad Request
  *       500:
  *         description: Internal Server Error
- *
  */
 router.post('/split-symptoms', auth, splitSymptoms);
 

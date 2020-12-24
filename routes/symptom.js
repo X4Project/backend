@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const { getSymptoms, addSymptom } = require('../controllers/symptomController');
+const {
+  getSymptoms,
+  addSymptom,
+  getSymptomsByDiseaseId
+} = require('../controllers/symptomController');
 const auth = require('../middlewares/auth');
+const validateObjectId = require('../middlewares/validateObjectId');
 
 /**
  * @swagger
@@ -33,6 +38,28 @@ const auth = require('../middlewares/auth');
  *         description: Internal Server Error
  */
 router.get('/', getSymptoms);
+
+/**
+ * @swagger
+ * /symptom/{diseaseId}:
+ *   get:
+ *     tags: [Symptom]
+ *     summary: Get symptom list of a disease
+ *     parameters:
+ *       - in: path
+ *         name: diseaseId
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Success
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+router.get('/:diseaseId', validateObjectId, getSymptomsByDiseaseId);
 
 /**
  * @swagger

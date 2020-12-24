@@ -9,7 +9,6 @@ const {
 } = require('../helpers/ErrorHelper');
 const Symptom = mongoose.model('symptoms', symptomSchema, 'symptoms');
 const Disease = mongoose.model('diseases', diseaseSchema, 'diseases');
-const { SUCCESS } = require('../constants/errorCodeConstants');
 
 const getSymptoms = async (req, res) => {
   try {
@@ -34,7 +33,25 @@ const addSymptom = async (req, res) => {
   }
 };
 
+const getSymptomsByDiseaseId = async (req, res) => {
+  try {
+    const symptom = await Symptom.findOne({
+      diseaseId: req.params.diseaseId
+    });
+    if (!symptom) {
+      return NotFound(res, 'Not Found.');
+    } else {
+      return SuccessResponse(res, symptom.list);
+    }
+  } catch (error) {
+    logger.error(error.message, error);
+    return BadRequest(res, error);
+  }
+};
+
 module.exports = {
   getSymptoms,
-  addSymptom
+  getSymptomsByDiseaseId,
+  addSymptom,
+  Symptom
 };
