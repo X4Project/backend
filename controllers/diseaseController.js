@@ -2,6 +2,7 @@ const { logger } = require('../middlewares/logging');
 const mongoose = require('mongoose');
 const { diseaseSchema } = require('../models/disease');
 const { categorySchema } = require('../models/category');
+diseaseSchema.get('overview', {}, { getters: false });
 const Disease = mongoose.model('diseases', diseaseSchema, 'diseases');
 const Category = mongoose.model('categories', categorySchema, 'categories');
 const {
@@ -93,7 +94,7 @@ const getDiseases = async (req, res) => {
       }
     })
       // .populate('categories', 'id name tag')
-      .select('name image overview')
+      .select('keyword name image overview')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
       .skip(isGetAll ? 0 : (pageIndex - 1) * pageSize)
       .limit(isGetAll ? 0 : parseInt(pageSize));
@@ -114,7 +115,8 @@ const getDiseaseById = async (req, res) => {
   try {
     let disease = await Disease.findById(req.params.id)
       .populate('categories', 'id name tag')
-      .select('-id');
+      .select('-id')
+      .lean();
     if (!disease) {
       return NotFound(res, 'Not found.');
     } else {
