@@ -25,7 +25,7 @@ const updateSetting = async (req, res) => {
   try {
     const latestSetting = await Setting.find().limit(1);
     const filter = { _id: latestSetting[0]._id };
-    const update = { isShowAds: req.body.isShowAds, updatedDate: new Date() };
+    const update = { isShowAds: req.body.isShowAds };
     await Setting.findOneAndUpdate(filter, update);
     return SuccessResponse(res, null, 204);
   } catch (error) {

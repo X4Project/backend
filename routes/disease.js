@@ -108,7 +108,7 @@ router.get('/:id', validateObjectId, getDiseaseById);
  * /disease/{id}/symptoms:
  *   get:
  *     tags: [Disease]
- *     summary: Get symptom list of a disease
+ *     summary: Get symptom list of a disease (use for prediction only)
  *     parameters:
  *       - in: path
  *         name: id

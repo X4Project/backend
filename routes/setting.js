@@ -34,7 +34,7 @@ router.get('/', getSetting);
 /**
  * @swagger
  * /setting:
- *   put:
+ *   patch:
  *     tags: [Setting]
  *     summary: Update setting for the system
  *     consumes:
@@ -49,6 +49,6 @@ router.get('/', getSetting);
  *       201:
  *         description: Success
  */
-router.put('/', auth, updateSetting);
+router.patch('/', auth, updateSetting);
 
 module.exports = router;
