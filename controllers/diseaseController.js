@@ -93,14 +93,14 @@ const getDiseases = async (req, res) => {
         $in: [categoryId]
       }
     })
-      // .populate('categories', 'id name tag')
+      .populate('categories', 'id')
       .select('keyword name image overview')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
-      .skip(isGetAll ? 0 : (pageIndex - 1) * pageSize)
+      .skip(isGetAll ? 0 : parseInt((pageIndex - 1) * pageSize))
       .limit(isGetAll ? 0 : parseInt(pageSize));
 
     return SuccessResponse(res, {
-      pageIndex: isGetAll ? 1 : pageIndex,
+      pageIndex: isGetAll ? 1 : parseInt(pageIndex),
       pageSize: isGetAll ? count : parseInt(pageSize),
       count,
       data: diseases
