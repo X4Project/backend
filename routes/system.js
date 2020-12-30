@@ -4,7 +4,8 @@ const {
   splitSymptoms,
   runLogger,
   getWordbook,
-  getWordbookById
+  getWordbookById,
+  processMultiLangDiseases
 } = require('../controllers/systemController');
 const auth = require('../middlewares/auth');
 const validateObjectId = require('../middlewares/validateObjectId');
@@ -19,6 +20,13 @@ const validateObjectId = require('../middlewares/validateObjectId');
  *     type: object
  *     properties:
  *       secretKey:
+ *         type: string
+ *   ProcessMultilangDiseasesRequest:
+ *     type: object
+ *     properties:
+ *       secretKey:
+ *         type: string
+ *       lang:
  *         type: string
  */
 
@@ -44,6 +52,29 @@ const validateObjectId = require('../middlewares/validateObjectId');
  *         description: Internal Server Error
  */
 router.post('/split-symptoms', auth, splitSymptoms);
+
+/**
+ * @swagger
+ * /system/process-multilang-diseases:
+ *   post:
+ *     tags: [System]
+ *     parameters:
+ *       - in: body
+ *         name: ProcessMultilangDiseasesRequest
+ *         schema:
+ *           $ref: '#/definitions/ProcessMultilangDiseasesRequest'
+ *     summary: Pre-process multi-lang diseases
+ *     responses:
+ *       200:
+ *         description: Success
+ *       401:
+ *         description: Unauthorized
+ *       400:
+ *         description: Bad Request
+ *       500:
+ *         description: Internal Server Error
+ */
+router.post('/process-multilang-diseases', auth, processMultiLangDiseases);
 
 /**
  * @swagger

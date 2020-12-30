@@ -9,7 +9,8 @@ const Wordbook = mongoose.model('wordbook', wordbookSchema, 'wordbook');
 const {
   Unauthorized,
   SuccessResponse,
-  BadRequest
+  BadRequest,
+  NotFound
 } = require('../helpers/ErrorHelper');
 const {
   DEFAULT_SORT_BY_DIRECTION,
@@ -19,6 +20,24 @@ const {
   DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE
 } = require('../constants/paginationConstants');
+const { getLanguageInfo } = require('../constants/language-constants');
+
+const processMultiLangDiseases = async (req, res) => {
+  try {
+    const languageInfo = getLanguageInfo(req.body.lang);
+    if (!languageInfo) {
+      return NotFound(res, 'Language not found');
+    }
+    if (req.body.secretKey === config.X4_SECRET_KEY) {
+      return SuccessResponse(res, languageInfo);
+    } else {
+      return Unauthorized(res, 'Invalid secret key');
+    }
+  } catch (error) {
+    logger.error(error.message, error);
+    return BadRequest(res, error);
+  }
+};
 
 const splitSymptoms = async (req, res) => {
   try {
@@ -144,5 +163,6 @@ module.exports = {
   runLogger,
   getWordbook,
   getWordbookById,
+  processMultiLangDiseases,
   Wordbook
 };
