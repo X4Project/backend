@@ -64,7 +64,7 @@ diseaseSchema.virtual('keyword').get(function () {
   if (this.overview === null) {
     this.overview = '';
   }
-  return generateDiseaseKeyword(this._id + this.name + this.overview);
+  return generateDiseaseKeyword(this.name + this.overview);
 });
 
 diseaseSchema.plugin(normalize);
