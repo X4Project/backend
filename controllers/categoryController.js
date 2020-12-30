@@ -1,11 +1,7 @@
 const mongoose = require('mongoose');
 const { logger } = require('../middlewares/logging');
 const { categorySchema } = require('../models/category');
-const {
-  SuccessResponse,
-  BadRequest,
-  InternalServerError
-} = require('../helpers/ErrorHelper');
+const { SuccessResponse, BadRequest } = require('../helpers/ErrorHelper');
 const Category = mongoose.model('categories', categorySchema, 'categories');
 
 const getAllCategories = async (req, res) => {
@@ -14,7 +10,7 @@ const getAllCategories = async (req, res) => {
     return SuccessResponse(res, categories);
   } catch (error) {
     logger.error(error.message, error);
-    return InternalServerError(res, error);
+    return BadRequest(res, error);
   }
 };
 
