@@ -20,7 +20,10 @@ const {
   DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE
 } = require('../constants/paginationConstants');
-const { getLanguageInfo } = require('../constants/language-constants');
+const {
+  getLanguageInfo,
+  getSectionHtml
+} = require('../constants/language-constants');
 
 const processMultiLangDiseases = async (req, res) => {
   try {
@@ -29,7 +32,33 @@ const processMultiLangDiseases = async (req, res) => {
       return NotFound(res, 'Language not found');
     }
     if (req.body.secretKey === config.X4_SECRET_KEY) {
-      return SuccessResponse(res, languageInfo);
+      const rawMultilangDiseases = await Wordbook.find({
+        lang: {
+          $regex: req.body.lang
+        }
+      })
+        .select('definition name')
+        .skip(300)
+        .limit(50);
+      let newDiseases = [];
+      rawMultilangDiseases.forEach(rawMultilangDisease => {
+        const keys = Object.keys(languageInfo);
+        let languageInfoWithKey = {};
+        keys.forEach(key => {
+          languageInfoWithKey[key] = getSectionHtml(
+            rawMultilangDisease.definition,
+            languageInfo[key]
+          );
+          languageInfoWithKey.lang = languageInfo.lang;
+          languageInfoWithKey.langCode = languageInfo.langCode;
+        });
+        const disease = {
+          name: rawMultilangDisease.name,
+          ...languageInfoWithKey
+        };
+        newDiseases.push(disease);
+      });
+      return SuccessResponse(res, { languageInfo, newDiseases });
     } else {
       return Unauthorized(res, 'Invalid secret key');
     }

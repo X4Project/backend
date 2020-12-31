@@ -47,6 +47,11 @@ const diseaseSchema = new Schema(
     preventionArray: String,
     bookmark: String,
     note: String,
+    lang: {
+      type: String,
+      default: 'english'
+    },
+    langCode: { type: String, default: '0' },
     categories: [
       {
         type: ObjectId,

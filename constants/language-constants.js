@@ -1,87 +1,163 @@
 const Languages = [
   {
-    id: '0',
+    langCode: '0',
     lang: 'english',
     overview: 'OVERVIEW',
     definition: 'DEFINITION',
-    symptoms: '',
+    symptoms: 'SYMPTOMS',
     causes: 'CAUSES',
     symptoms: 'SYMPTOMS',
     diagnose: 'DIAGNOSE',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    prevention: 'PREVENTION',
+    therapy: 'THERAPY',
+    risk: 'RISK',
+    complications: 'COMPLICATIONS',
+    preparing: 'PREPARING',
+    tests: 'TESTS',
+    lifestyle: 'LIFESTYLE',
+    alternative: 'ALTERNATIVE',
+    coping: 'COPING',
+    treatment: '',
+    description: ''
   },
   {
-    id: '1',
+    langCode: '1',
     lang: 'russian',
-    overview: 'OVERVIEW',
-    definition: 'DEFINITION',
+    overview: '',
+    definition: '',
     causes: 'ПРИЧИНЫ',
     symptoms: 'СИМПТОМЫ',
     diagnose: 'ДИАГНОСТИКА',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    prevention: 'ПРОФИЛАКТИКА',
+    therapy: '',
+    risk: 'ОПАСНОСТЬ',
+    complications: '',
+    preparing: '',
+    tests: '',
+    lifestyle: '',
+    alternative: '',
+    coping: '',
+    treatment: 'ЛЕЧЕНИЕ',
+    description: 'ОПИСАНИЕ'
   },
   {
-    id: '3',
+    langCode: '3',
     lang: 'german',
-    overview: 'OVERVIEW',
-    definition: 'DEFINITION',
-    causes: 'CAUSES',
-    symptoms: 'SYMPTOMS',
-    diagnose: 'DIAGNOSE',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    overview: '',
+    definition: '',
+    causes: '',
+    symptoms: '',
+    diagnose: '',
+    prevention: '',
+    therapy: '',
+    risk: '',
+    complications: '',
+    preparing: '',
+    tests: '',
+    lifestyle: '',
+    alternative: '',
+    coping: '',
+    treatment: '',
+    description: ''
   },
   {
-    id: '4',
+    langCode: '4',
     lang: 'portuguese',
-    overview: 'OVERVIEW',
-    definition: 'DEFINITION',
-    causes: 'CAUSES',
-    symptoms: 'SYMPTOMS',
-    diagnose: 'DIAGNOSE',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    overview: '',
+    definition: '',
+    causes: '',
+    symptoms: '',
+    diagnose: '',
+    prevention: '',
+    therapy: '',
+    risk: '',
+    complications: '',
+    preparing: '',
+    tests: '',
+    lifestyle: '',
+    alternative: '',
+    coping: '',
+    treatment: '',
+    description: ''
   },
   {
-    id: '5',
+    langCode: '5',
     lang: 'french',
-    overview: 'OVERVIEW',
-    definition: 'DEFINITION',
-    causes: 'CAUSES',
-    symptoms: 'SYMPTOMS',
-    diagnose: 'DIAGNOSE',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    overview: '',
+    definition: '',
+    causes: '',
+    symptoms: '',
+    diagnose: '',
+    prevention: '',
+    therapy: '',
+    risk: '',
+    complications: '',
+    preparing: '',
+    tests: '',
+    lifestyle: '',
+    alternative: '',
+    coping: '',
+    treatment: '',
+    description: ''
   },
   {
-    id: '7',
+    langCode: '7',
     lang: 'spanish',
-    overview: 'OVERVIEW',
-    definition: 'DEFINITION',
-    causes: 'CAUSES',
-    symptoms: 'SYMPTOMS',
-    diagnose: 'DIAGNOSE',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    overview: '',
+    definition: '',
+    causes: '',
+    symptoms: '',
+    diagnose: '',
+    prevention: '',
+    therapy: '',
+    risk: '',
+    complications: '',
+    preparing: '',
+    tests: '',
+    lifestyle: '',
+    alternative: '',
+    coping: '',
+    treatment: '',
+    description: ''
   },
   {
-    id: '11',
-    lang: 'indonesin',
-    overview: 'OVERVIEW',
-    definition: 'DEFINITION',
-    causes: 'CAUSES',
-    symptoms: 'SYMPTOMS',
-    diagnose: 'DIAGNOSE',
-    prevention: 'PREVENT',
-    therapy: 'THERAPY'
+    langCode: '11',
+    lang: 'indonesia',
+    overview: '',
+    definition: '',
+    causes: '',
+    symptoms: '',
+    diagnose: '',
+    prevention: '',
+    therapy: '',
+    risk: '',
+    complications: '',
+    preparing: '',
+    tests: '',
+    lifestyle: '',
+    alternative: '',
+    coping: ''
   }
 ];
 
-const getLanguageInfo = id => Languages.find(lang => lang.id === id);
+const getLanguageInfo = langCode =>
+  Languages.find(lang => lang.langCode === langCode);
+
+const getSectionHtml = (content, key) => {
+  const addedSuffixContent = `${content}<h2>`;
+  if (!key) {
+    return null;
+  } else {
+    const regex = new RegExp(`<h(2|3)>${key}.*?<h(2|3)>`);
+    const sectionContent = addedSuffixContent.match(regex);
+    return sectionContent && sectionContent.length > 0
+      ? sectionContent[0].slice(0, -4)
+      : null;
+  }
+};
 
 module.exports = {
   Languages,
-  getLanguageInfo
+  getLanguageInfo,
+  getSectionHtml
 };
