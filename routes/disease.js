@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   getDiseases,
   getDiseaseById,
-  addCategoriesToDisease
+  addCategoriesToDisease,
+  getDiseasesV2
 } = require('../controllers/diseaseController');
 const { getSymptomsByDiseaseId } = require('../controllers/symptomController');
 const validateObjectId = require('../middlewares/validateObjectId');
@@ -80,6 +81,48 @@ const auth = require('../middlewares/auth');
  *
  */
 router.get('/', getDiseases);
+
+/**
+ * @swagger
+ * /disease/v2:
+ *   get:
+ *     tags: [Disease]
+ *     parameters:
+ *       - in: query
+ *         name: keyword
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: categoryId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: langCode
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: pageSize
+ *         schema:
+ *           type: number
+ *       - in: query
+ *         name: pageIndex
+ *         schema:
+ *           type: number
+ *       - in: query
+ *         name: orderByColumn
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: orderByDirection
+ *         schema:
+ *           type: string
+ *     summary: Get diseases
+ *     responses:
+ *       200:
+ *         description: Success
+ *
+ */
+router.get('/v2', getDiseasesV2);
 
 /**
  * @swagger

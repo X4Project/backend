@@ -36,10 +36,7 @@ const processMultiLangDiseases = async (req, res) => {
         lang: {
           $regex: req.body.lang
         }
-      })
-        .select('definition name')
-        .skip(300)
-        .limit(50);
+      }).select('definition name');
       let newDiseases = [];
       rawMultilangDiseases.forEach(rawMultilangDisease => {
         const keys = Object.keys(languageInfo);
@@ -58,7 +55,18 @@ const processMultiLangDiseases = async (req, res) => {
         };
         newDiseases.push(disease);
       });
-      return SuccessResponse(res, { languageInfo, newDiseases });
+      const diseasesPromises = newDiseases.map(disease => {
+        const newDisease = new Disease(disease);
+        return newDisease;
+        // return newDisease.save();
+      });
+      Promise.all(diseasesPromises).then(result => {
+        return SuccessResponse(res, {
+          message: 'Done spliting multi-lang diseases',
+          languageInfo,
+          newDiseases: newDiseases.length
+        });
+      });
     } else {
       return Unauthorized(res, 'Invalid secret key');
     }

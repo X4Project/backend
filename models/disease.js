@@ -67,7 +67,7 @@ const diseaseSchema = new Schema(
 
 diseaseSchema.virtual('keyword').get(function () {
   if (this.overview === null) {
-    this.overview = '';
+    this.overview = this.description ? this.description : '';
   }
   return generateDiseaseKeyword(this.name + this.overview);
 });

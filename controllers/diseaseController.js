@@ -111,6 +111,60 @@ const getDiseases = async (req, res) => {
   }
 };
 
+const getDiseasesV2 = async (req, res) => {
+  try {
+    const {
+      keyword = '',
+      langCode,
+      categoryId,
+      pageIndex,
+      pageSize,
+      orderByColumn = DEFAULT_SORT_BY_COLUMN,
+      orderByDirection = DEFAULT_SORT_BY_DIRECTION
+    } = req.query;
+
+    const isGetAll = !(pageIndex && pageSize);
+    const langQuery = !langCode ? {} : { langCode };
+    const categoryIdQuery = !categoryId
+      ? {}
+      : {
+          categories: {
+            $in: [categoryId]
+          }
+        };
+    const count = await Disease.find({
+      ...langQuery,
+      ...categoryIdQuery,
+      name: {
+        $regex: keyword
+      }
+    }).count();
+
+    const diseases = await Disease.find({
+      ...langQuery,
+      ...categoryIdQuery,
+      name: {
+        $regex: keyword
+      }
+    })
+      .populate('categories', 'id')
+      .select('keyword name image langCode')
+      .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
+      .skip(isGetAll ? 0 : parseInt((pageIndex - 1) * pageSize))
+      .limit(isGetAll ? 0 : parseInt(pageSize));
+
+    return SuccessResponse(res, {
+      pageIndex: isGetAll ? 1 : parseInt(pageIndex),
+      pageSize: isGetAll ? count : parseInt(pageSize),
+      count,
+      data: diseases
+    });
+  } catch (error) {
+    logger.error(error.message, error);
+    return BadRequest(res, error);
+  }
+};
+
 const getDiseaseById = async (req, res) => {
   try {
     let disease = await Disease.findById(req.params.id)
@@ -130,6 +184,7 @@ const getDiseaseById = async (req, res) => {
 
 module.exports = {
   getDiseases,
+  getDiseasesV2,
   getDiseaseById,
   addCategoriesToDisease,
   Disease
