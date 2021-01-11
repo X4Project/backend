@@ -12,7 +12,11 @@ const diseaseSchema = new Schema(
   {
     id: Number,
     name: String,
-    image: String,
+    image: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/shawn29/image/upload/v1610334985/Categories/placeholder_uhonq7.png'
+    },
     overview: {
       type: String,
       get: function (value) {
@@ -65,12 +69,12 @@ const diseaseSchema = new Schema(
   }
 );
 
-diseaseSchema.virtual('keyword').get(function () {
-  if (this.overview === null) {
-    this.overview = this.description ? this.description : '';
-  }
-  return generateDiseaseKeyword(this.name + this.overview);
-});
+// diseaseSchema.virtual('keyword').get(function () {
+//   if (this.overview === null) {
+//     this.overview = this.description ? this.description : '';
+//   }
+//   return generateDiseaseKeyword(this.name + this.overview);
+// });
 
 diseaseSchema.plugin(normalize);
 

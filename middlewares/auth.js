@@ -7,11 +7,7 @@ module.exports = (req, res, next) => {
   const bearer = bearerHeader && bearerHeader.split(' ');
   const bearerToken = bearer && bearer.length > 0 && bearer[1];
   const token = bearerToken || req.headers['token'];
-  if (!token)
-    return Unauthorized(
-      res,
-      'Access denied. No token provided.' + bearerHeader + bearer
-    );
+  if (!token) return Unauthorized(res, 'Access denied. No token provided.');
   try {
     const decodedPayload = jwt.verify(token, config.JWT_SECRET_KEY);
     req.user = decodedPayload;

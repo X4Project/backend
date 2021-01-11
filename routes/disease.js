@@ -86,6 +86,8 @@ router.get('/', getDiseases);
  * @swagger
  * /disease/v2:
  *   get:
+ *     produces:
+ *       - application/json
  *     tags: [Disease]
  *     parameters:
  *       - in: query
@@ -98,22 +100,6 @@ router.get('/', getDiseases);
  *           type: string
  *       - in: query
  *         name: langCode
- *         schema:
- *           type: string
- *       - in: query
- *         name: pageSize
- *         schema:
- *           type: number
- *       - in: query
- *         name: pageIndex
- *         schema:
- *           type: number
- *       - in: query
- *         name: orderByColumn
- *         schema:
- *           type: string
- *       - in: query
- *         name: orderByDirection
  *         schema:
  *           type: string
  *     summary: Get diseases
