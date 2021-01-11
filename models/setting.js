@@ -4,6 +4,8 @@ const Schema = mongoose.Schema;
 
 const settingSchema = new Schema({
   isShowAds: { type: Boolean, required: true },
+  isShowCategories: { type: Boolean, required: true },
+  hasNewData: { type: String, required: true },
   lastUpdated: { type: Date, default: Date.now }
 });
 

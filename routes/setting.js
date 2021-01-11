@@ -17,6 +17,10 @@ const auth = require('../middlewares/auth');
  *     properties:
  *       isShowAds:
  *         type: boolean
+ *       isShowCategories:
+ *         type: boolean
+ *       hasNewData:
+ *         type: boolean
  */
 
 /**

@@ -41,6 +41,7 @@
     "normalize-mongoose": "0.0.1",
     "swagger-jsdoc": "^5.0.1",
     "swagger-ui-express": "^4.1.5",
+    "uuid": "^8.3.2",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.5"
   }
