@@ -26,7 +26,15 @@ const diseaseSchema = new Schema(
         );
       }
     },
-    definition: String,
+    definition: {
+      type: String,
+      get: function (value) {
+        return (
+          value &&
+          filterSpecialCharacters(value).slice(0, MAX_DISPLAY_OVERVIEW_LENGTH)
+        );
+      }
+    },
     symptoms: String,
     causes: String,
     risk: String,

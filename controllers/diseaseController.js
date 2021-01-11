@@ -94,7 +94,7 @@ const getDiseases = async (req, res) => {
       }
     })
       .populate('categories', 'id')
-      .select('name image overview')
+      .select('name image overview definition')
       .sort(`${orderByDirection === 'asc' ? '' : '-'}${orderByColumn}`)
       .skip(isGetAll ? 0 : parseInt((pageIndex - 1) * pageSize))
       .limit(isGetAll ? 0 : parseInt(pageSize));
@@ -130,7 +130,7 @@ const getDiseasesV2 = async (req, res) => {
       }
     })
       .populate('categories', 'id')
-      .select('name image langCode overview');
+      .select('name image langCode overview definition');
     return SuccessResponse(res, diseases);
   } catch (error) {
     logger.error(error.message, error);
