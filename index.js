@@ -7,6 +7,7 @@ require('./startup/logging')();
 require('./startup/database')();
 require('./startup/prod')(app);
 require('./startup/routes')(app);
+require('./startup/cron-jobs');
 
 const port = config.PORT || 3000;
 
