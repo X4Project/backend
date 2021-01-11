@@ -21,7 +21,7 @@ userSchema.methods.generateAuthToken = function () {
       email: this.email
     },
     config.JWT_SECRET_KEY,
-    { expiresIn: '3h' }
+    { expiresIn: '5h' }
   );
   return token;
 };
