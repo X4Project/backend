@@ -71,7 +71,8 @@ const getDiseases = async (req, res) => {
       ],
       categories: {
         $in: [categoryId]
-      }
+      },
+      langCode: null
     }).count();
 
     const diseases = await Disease.find({
@@ -91,7 +92,8 @@ const getDiseases = async (req, res) => {
       ],
       categories: {
         $in: [categoryId]
-      }
+      },
+      langCode: null
     })
       .populate('categories', 'id')
       .select('name image overview definition')

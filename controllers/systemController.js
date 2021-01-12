@@ -64,7 +64,7 @@ const processMultiLangDiseases = async (req, res) => {
         return SuccessResponse(res, {
           message: 'Done spliting multi-lang diseases',
           languageInfo,
-          newDiseases: newDiseases.length
+          newDiseases: newDiseases
         });
       });
     } else {
