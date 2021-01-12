@@ -14,6 +14,10 @@ const {
   DEFAULT_SORT_BY_DIRECTION,
   DEFAULT_SORT_BY_COLUMN
 } = require('../constants/sortingConstants');
+const {
+  getLanguageInfo,
+  LanguageCodes
+} = require('../constants/language-constants');
 
 const addCategoriesToDisease = async (req, res) => {
   try {
@@ -114,9 +118,15 @@ const getDiseases = async (req, res) => {
 };
 
 const getDiseasesV2 = async (req, res) => {
+  const languageInfo = getLanguageInfo(
+    req.query.langCode || LanguageCodes.ENGLISH
+  );
   try {
     const { keyword = '', langCode, categoryId } = req.query;
-    const langQuery = !langCode ? {} : { langCode };
+    const langQuery =
+      !langCode || langCode === LanguageCodes.ENGLISH
+        ? { langCode: null }
+        : { langCode };
     const categoryIdQuery = !categoryId
       ? {}
       : {
@@ -133,7 +143,7 @@ const getDiseasesV2 = async (req, res) => {
     })
       .populate('categories', 'id')
       .select('name image langCode overview definition');
-    return SuccessResponse(res, diseases);
+    return SuccessResponse(res, { languageInfo: languageInfo, diseases });
   } catch (error) {
     logger.error(error.message, error);
     return BadRequest(res, error);

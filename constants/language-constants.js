@@ -170,6 +170,7 @@ const getSectionHtml = (content, key) => {
 
 module.exports = {
   Languages,
+  LanguageCodes,
   getLanguageInfo,
   getSectionHtml
 };
