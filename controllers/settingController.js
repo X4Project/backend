@@ -17,7 +17,9 @@ const getSetting = async (req, res) => {
       hasNewData:
         setting.length > 0 && setting[0].hasNewData
           ? setting[0].hasNewData
-          : null
+          : null,
+      lastUpdated: setting.length > 0 && setting[0].lastUpdated,
+      lastInformed: setting.length > 0 && setting[0].lastInformed
     });
   } catch (error) {
     logger.error(error.message, error);
@@ -29,12 +31,15 @@ const updateSetting = async (req, res) => {
   try {
     const latestSetting = await Setting.find().limit(1);
     const filter = { _id: latestSetting[0]._id };
+    const updatedTiming = new Date();
     let update = {
       isShowAds: req.body.isShowAds,
-      isShowCategories: req.body.isShowCategories
+      isShowCategories: req.body.isShowCategories,
+      lastUpdated: updatedTiming
     };
     if (req.body.hasNewData === true) {
       update['hasNewData'] = generateUUID();
+      update['lastInformed'] = updatedTiming;
     }
     await Setting.findOneAndUpdate(filter, update);
     return SuccessResponse(res, null, 204);
