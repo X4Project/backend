@@ -22,7 +22,8 @@ const {
 } = require('../constants/paginationConstants');
 const {
   getLanguageInfo,
-  getSectionHtml
+  getSectionHtml,
+  Languages
 } = require('../constants/language-constants');
 
 const processMultiLangDiseases = async (req, res) => {
@@ -195,11 +196,16 @@ const getWordbookById = async (req, res) => {
   }
 };
 
+const getLanguageInfoList = (req, res) => {
+  return SuccessResponse(res, Languages);
+};
+
 module.exports = {
   splitSymptoms,
   runLogger,
   getWordbook,
   getWordbookById,
   processMultiLangDiseases,
+  getLanguageInfoList,
   Wordbook
 };

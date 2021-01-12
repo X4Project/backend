@@ -5,7 +5,8 @@ const {
   runLogger,
   getWordbook,
   getWordbookById,
-  processMultiLangDiseases
+  processMultiLangDiseases,
+  getLanguageInfoList
 } = require('../controllers/systemController');
 const auth = require('../middlewares/auth');
 const validateObjectId = require('../middlewares/validateObjectId');
@@ -154,5 +155,17 @@ router.get('/get-wordbook', getWordbook);
  *         description: Not Found
  */
 router.get('/get-wordbook/:id', validateObjectId, getWordbookById);
+
+/**
+ * @swagger
+ * /system/get-languages:
+ *   get:
+ *     tags: [System]
+ *     summary: Get language information list
+ *     responses:
+ *       200:
+ *         description: Success
+ */
+router.get('/get-languages', getLanguageInfoList);
 
 module.exports = router;
