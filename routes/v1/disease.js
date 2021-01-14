@@ -5,15 +5,17 @@ const {
   getDiseaseById,
   addCategoriesToDisease,
   getDiseasesV2
-} = require('../controllers/diseaseController');
-const { getSymptomsByDiseaseId } = require('../controllers/symptomController');
-const validateObjectId = require('../middlewares/validateObjectId');
-const auth = require('../middlewares/auth');
+} = require('../../controllers/diseaseController');
+const {
+  getSymptomsByDiseaseId
+} = require('../../controllers/symptomController');
+const validateObjectId = require('../../middlewares/validateObjectId');
+const auth = require('../../middlewares/auth');
 const {
   TIMERANGE_GET_DISEASE_BY_ID,
   MAXIMUM_NUMBER_OF_REQUESTS_GET_DISEASE_BY_ID
-} = require('../constants/rateLimitingConstants');
-const { createRateLimiter } = require('../helpers/RateLimitHelper');
+} = require('../../constants/rateLimitingConstants');
+const { createRateLimiter } = require('../../helpers/RateLimitHelper');
 
 /**
  * @swagger

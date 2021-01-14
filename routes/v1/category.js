@@ -4,9 +4,9 @@ const {
   getAllCategories,
   addCategory,
   updateCategory
-} = require('../controllers/categoryController');
-const validateObjectId = require('../middlewares/validateObjectId');
-const auth = require('../middlewares/auth');
+} = require('../../controllers/categoryController');
+const validateObjectId = require('../../middlewares/validateObjectId');
+const auth = require('../../middlewares/auth');
 
 /**
  * @swagger

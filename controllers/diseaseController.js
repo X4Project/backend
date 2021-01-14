@@ -166,10 +166,28 @@ const getDiseaseById = async (req, res) => {
   }
 };
 
+const getDiseaseByIdV2 = async (req, res) => {
+  try {
+    let disease = await Disease.findById(req.params.id)
+      .populate('categories', 'id name tag')
+      .select('-id');
+    if (!disease) {
+      return NotFound(res, 'Not found.');
+    } else {
+      const languageInfo = getLanguageInfo(disease.langCode);
+      return SuccessResponse(res, { languageInfo, disease });
+    }
+  } catch (error) {
+    logger.error(error.message, error);
+    return BadRequest(res, error);
+  }
+};
+
 module.exports = {
   getDiseases,
   getDiseasesV2,
   getDiseaseById,
+  getDiseaseByIdV2,
   addCategoriesToDisease,
   Disease
 };

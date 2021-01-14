@@ -7,9 +7,9 @@ const {
   getWordbookById,
   processMultiLangDiseases,
   getLanguageInfoList
-} = require('../controllers/systemController');
-const auth = require('../middlewares/auth');
-const validateObjectId = require('../middlewares/validateObjectId');
+} = require('../../controllers/systemController');
+const auth = require('../../middlewares/auth');
+const validateObjectId = require('../../middlewares/validateObjectId');
 
 /**
  * @swagger

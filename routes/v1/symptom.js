@@ -4,9 +4,9 @@ const {
   getSymptoms,
   addSymptom,
   getSymptomsByDiseaseId
-} = require('../controllers/symptomController');
-const auth = require('../middlewares/auth');
-const validateObjectId = require('../middlewares/validateObjectId');
+} = require('../../controllers/symptomController');
+const auth = require('../../middlewares/auth');
+const validateObjectId = require('../../middlewares/validateObjectId');
 
 /**
  * @swagger

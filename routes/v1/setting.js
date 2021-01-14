@@ -3,8 +3,8 @@ const router = express.Router();
 const {
   getSetting,
   updateSetting
-} = require('../controllers/settingController');
-const auth = require('../middlewares/auth');
+} = require('../../controllers/settingController');
+const auth = require('../../middlewares/auth');
 
 /**
  * @swagger
