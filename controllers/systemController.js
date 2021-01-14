@@ -24,7 +24,7 @@ const {
   getLanguageInfo,
   getSectionHtml,
   Languages
-} = require('../constants/language-constants');
+} = require('../constants/languageConstants');
 
 const processMultiLangDiseases = async (req, res) => {
   try {

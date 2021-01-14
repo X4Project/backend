@@ -17,7 +17,7 @@ const {
 const {
   getLanguageInfo,
   LanguageCodes
-} = require('../constants/language-constants');
+} = require('../constants/languageConstants');
 
 const addCategoriesToDisease = async (req, res) => {
   try {
