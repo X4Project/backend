@@ -9,6 +9,11 @@ const {
 const { getSymptomsByDiseaseId } = require('../controllers/symptomController');
 const validateObjectId = require('../middlewares/validateObjectId');
 const auth = require('../middlewares/auth');
+const {
+  TIMERANGE_GET_DISEASE_BY_ID,
+  MAXIMUM_NUMBER_OF_REQUESTS_GET_DISEASE_BY_ID
+} = require('../constants/rateLimitingConstants');
+const { createRateLimiter } = require('../helpers/RateLimitHelper');
 
 /**
  * @swagger
@@ -130,7 +135,11 @@ router.get('/v2', getDiseasesV2);
  *       404:
  *         description: Not Found
  */
-router.get('/:id', validateObjectId, getDiseaseById);
+const getDiseaseByIdRateLimiter = createRateLimiter(
+  TIMERANGE_GET_DISEASE_BY_ID,
+  MAXIMUM_NUMBER_OF_REQUESTS_GET_DISEASE_BY_ID
+);
+router.get('/:id', validateObjectId, getDiseaseByIdRateLimiter, getDiseaseById);
 
 /**
  * @swagger

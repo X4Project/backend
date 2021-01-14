@@ -6,6 +6,7 @@ const app = express();
 require('./startup/logging')();
 require('./startup/database')();
 require('./startup/prod')(app);
+require('./startup/rate-limiting')(app);
 require('./startup/routes')(app);
 require('./startup/cron-jobs');
 
