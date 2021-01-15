@@ -1,17 +1,64 @@
 module.exports = {
-  options: {
+  v1Options: {
     explorer: true,
-    swaggerOptions: {
-      validatorUrl: null
-    },
-    customCssUrl: '/swagger.css',
     swaggerDefinition: {
+      openapi: '3.0.3',
       info: {
-        title: 'Diseases - REST API',
+        title: '3-Di API',
         version: '1.0',
-        description: 'REST API for managing diseases, categories'
-      }
+        description: 'REST API for managing diseases, categories',
+        license: {
+          name: 'MIT',
+          url: 'https://choosealicense.com/licenses/mit/'
+        }
+      },
+      basePath: '/',
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+          }
+        }
+      },
+      security: [
+        {
+          bearerAuth: []
+        }
+      ]
     },
-    apis: ['./routes/*.js']
+    apis: ['./routes/v1/*.js']
+  },
+  v2Options: {
+    explorer: true,
+    swaggerDefinition: {
+      openapi: '3.0.3',
+      info: {
+        title: '3-Di API',
+        version: '2.0',
+        description: 'REST API for managing diseases, categories',
+        license: {
+          name: 'MIT',
+          url: 'https://choosealicense.com/licenses/mit/'
+        }
+      },
+      basePath: '/',
+      components: {
+        securitySchemes: {
+          bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+          }
+        }
+      },
+      security: [
+        {
+          bearerAuth: []
+        }
+      ]
+    },
+    apis: ['./routes/*/*.js']
   }
 };

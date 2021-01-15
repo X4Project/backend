@@ -47,7 +47,7 @@ const { createRateLimiter } = require('../../helpers/RateLimitHelper');
 
 /**
  * @swagger
- * /disease:
+ * /v2/disease:
  *   get:
  *     produces:
  *       - application/json
@@ -75,7 +75,7 @@ router.get('/', getDiseasesV2);
 
 /**
  * @swagger
- * /disease/{id}:
+ * /v2/disease/{id}:
  *   get:
  *     tags: [Disease]
  *     parameters:

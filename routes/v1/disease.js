@@ -91,34 +91,6 @@ router.get('/', getDiseases);
 
 /**
  * @swagger
- * /disease/v2:
- *   get:
- *     produces:
- *       - application/json
- *     tags: [Disease]
- *     parameters:
- *       - in: query
- *         name: keyword
- *         schema:
- *           type: string
- *       - in: query
- *         name: categoryId
- *         schema:
- *           type: string
- *       - in: query
- *         name: langCode
- *         schema:
- *           type: string
- *     summary: Get diseases
- *     responses:
- *       200:
- *         description: Success
- *
- */
-router.get('/v2', getDiseasesV2);
-
-/**
- * @swagger
  * /disease/{id}:
  *   get:
  *     tags: [Disease]
