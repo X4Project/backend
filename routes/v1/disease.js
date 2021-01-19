@@ -109,11 +109,11 @@ router.get('/', getDiseases);
  *       404:
  *         description: Not Found
  */
-const getDiseaseByIdRateLimiter = createRateLimiter(
-  TIMERANGE_GET_DISEASE_BY_ID,
-  MAXIMUM_NUMBER_OF_REQUESTS_GET_DISEASE_BY_ID
-);
-router.get('/:id', validateObjectId, getDiseaseByIdRateLimiter, getDiseaseById);
+// const getDiseaseByIdRateLimiter = createRateLimiter(
+//   TIMERANGE_GET_DISEASE_BY_ID,
+//   MAXIMUM_NUMBER_OF_REQUESTS_GET_DISEASE_BY_ID
+// );
+router.get('/:id', validateObjectId, getDiseaseById);
 
 /**
  * @swagger
